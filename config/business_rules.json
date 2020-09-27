@@ -1,0 +1,6 @@
+{
+    "rates":{
+        "inbound":{"variable_rate":{"minutes":0, "price":0},  "fixed_rate":{"minutes":0, "price":0} },
+        "outbound":{"variable_rate":{"minutes":1, "price":0.05}, "fixed_rate":{"minutes":5, "rate":0.10} }
+    }
+}

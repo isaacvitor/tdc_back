@@ -1,0 +1,26 @@
+{
+    "title":"TDC - Talkdesk Challenge",
+    "description":"This API try to solve the Talkdesk' Challenge",
+    "version":"0.0.1",
+    "base": "/api",
+    "routers": {
+        "database": {
+            "prefix": "/database",
+            "tags": [
+                "database utilities"
+            ]
+        },
+        "calls": {
+            "prefix": "/calls",
+            "tags": [
+                "calls"
+            ]
+        },
+        "statistics": {
+            "prefix": "/statistics",
+            "tags": [
+                "statistics"
+            ]
+        }
+    }
+}
