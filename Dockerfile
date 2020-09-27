@@ -1,14 +1,13 @@
-FROM python:3.7-alpine
+FROM python:3.7-slim
 ENV TDC_DATABASE_PATH=./data/db.sql
 ENV TDC_MAX_AGENTS=10
 ENV TDC_MAX_CLIENTS=100
-ARG TZ='Portugal'
-ENV DEFAULT_TZ ${TZ}
-RUN apk add --no-cache git && apk add tzdata
-RUN cp /usr/share/zoneinfo/${DEFAULT_TZ} /etc/localtime
-WORKDIR /usr/src/app
+ARG TDC_TZ='Europe/Lisbon'
+ENV DEFAULT_TZ ${TDC_TZ}
+# RUN apt-get install systemd && timedatectl set-timezone ${DEFAULT_TZ}
 COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
+WORKDIR /usr/src/app
 COPY . .
-CMD [ "uvicorn", "main:app" ]
-EXPOSE 8000
+EXPOSE 80
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "80"]
