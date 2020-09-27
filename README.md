@@ -71,7 +71,7 @@ $ docker build -t isaacvitor/tdc_back:latest .
 
 3. **After the build** run the command below to create a docker container:
 ```Shell
-$ docker run -d --name tdc_back -p 8000:8000 isaacvitor/tdc_back:latest
+$ docker run -d --name tdc_back -p 8000:80 isaacvitor/tdc_back:latest
 ```
 
 *After this point probably the container is running*
