@@ -4,7 +4,7 @@ ENV TDC_MAX_AGENTS=10
 ENV TDC_MAX_CLIENTS=100
 ARG TDC_TZ='Europe/Lisbon'
 ENV DEFAULT_TZ ${TDC_TZ}
-# RUN apt-get install systemd && timedatectl set-timezone ${DEFAULT_TZ}
+RUN ln -snf /usr/share/zoneinfo/$DEFAULT_TZ /etc/localtime && echo $DEFAULT_TZ > /etc/timezone
 COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 WORKDIR /usr/src/app

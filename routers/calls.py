@@ -10,7 +10,7 @@ router = APIRouter()
 class CallSchema(BaseModel):
     caller:int
     callee:int
-    started:datetime = datetime.utcnow()
+    started:datetime = datetime.now()
     finished:datetime
     duration:int
     call_type:CallType

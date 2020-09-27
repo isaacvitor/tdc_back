@@ -46,7 +46,7 @@ def create_fake_calls(call_type:CallType, agents_phones:list, clients_phones:lis
             fake_call['caller'] = agents_phones[randint(0,max_agents)]
             fake_call['callee'] = clients_phones[randint(0,max_clients)]
         
-        now = datetime.utcnow()
+        now = datetime.now()
         fake_call['started'] = now
         fake_call['finished'] = now + timedelta(minutes=randint(min_duration, max_duration))
         fake_call['duration'] = calculate_duration(fake_call['started'], fake_call['finished'])
