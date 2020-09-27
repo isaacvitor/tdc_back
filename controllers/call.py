@@ -1,21 +1,21 @@
 from datetime import datetime, timedelta
-from math import ceil
 from config import business_rules
 from models import tdc_db, Call, CallType, to_dict
+from utils.call_utils import calculate_duration
 
 
 class CallController():
 
     @staticmethod
-    def create(call):
+    def create(call_schema):
         new_call:dict
-        if calls:
+        if call_schema:
             with tdc_db.atomic():                
                 # Before use the object spread operator, call_schema(instance of CallSchema) needs to be converted to dict.
                 call:dict = call_schema.dict()
                 
                 #calculating duration
-                call['duration'] = CallController.__calculate_duration(call['started'], call['finished'])
+                call['duration'] = calculate_duration(call['started'], call['finished'])
                 # creating/recording a call
                 new_call = Call.create(**call)
         
@@ -31,7 +31,7 @@ class CallController():
                     call:dict = call_schema.dict()
                     
                     #calculating duration
-                    call['duration'] = CallController.__calculate_duration(call['started'], call['finished'])
+                    call['duration'] = calculate_duration(call['started'], call['finished'])
                     
                     new_calls.append(call)
                 r = Call.insert_many(new_calls).execute()
@@ -55,13 +55,5 @@ class CallController():
         return Call.delete_by_id(call_id)
 
     
-    
-
-    @staticmethod
-    def __calculate_duration(started_time:datetime, finished_time:datetime):
-        delta:timedelta = finished_time - started_time
-
-        #Convert delta to minutes
-        return ceil(delta.total_seconds() / 60 )
 
 

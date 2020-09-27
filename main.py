@@ -30,7 +30,7 @@ async def startup_event():
 @app.middleware("http")
 async def add_process_time_header(request: Request, call_next):
     # Open DB Connection
-    tdc_db.connect()
+    tdc_db.connect(reuse_if_open=True)
 
     response = await call_next(request)
 

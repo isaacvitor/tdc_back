@@ -25,3 +25,4 @@ htmlcov/
 
 notes.txt
 credentials
+data/*.sql
