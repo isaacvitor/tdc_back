@@ -14,6 +14,32 @@ def calculate_duration(started_time:datetime, finished_time:datetime):
         #Convert delta to minutes
         return ceil(delta.total_seconds() / 60 )
 
+def format_timedelta(duration:int, fmt):
+    td_duration = timedelta(minutes=duration)
+    hours, rem = divmod(td_duration.seconds, 3600)
+    minutes, seconds = divmod(rem, 60)
+    d:dict = {}
+    d["H"] = '{:02d}'.format(hours)
+    d["M"] = '{:02d}'.format(minutes)
+    d["S"] = '{:02d}'.format(seconds)
+    return fmt.format(**d)
+
+# "inbound":{"variable_rate":{"minutes":0, "price":0},  "fixed_rate":{"minutes":0, "price":0} },
+# "outbound":{"variable_rate":{"minutes":1, "price":0.05}, "fixed_rate":{"minutes":5, "price":0.10} }
+def calculate_call_cost(duration:int,fixed_rate:dict, variable_rate:dict):
+    total_cost = 0
+    if duration:
+        # Applying fixed rate
+        if fixed_rate['price']:
+            total_cost += fixed_rate['price']
+        
+        # Applying variable rate
+        if duration > fixed_rate['minutes'] and variable_rate['price']:
+            additional_duration = duration - fixed_rate['minutes']
+            total_cost += variable_rate['price'] * (additional_duration / variable_rate['minutes'])
+
+    return total_cost
+    
 def create_fake_phone_number():
     n = '0000000000'
     while '9' in n[3:6] or n[3:6]=='000' or n[6]==n[7]==n[8]==n[9]:

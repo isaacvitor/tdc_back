@@ -1,13 +1,14 @@
 from config import api_config
 from fastapi import Depends, FastAPI, Header, HTTPException, Request
 from models import tdc_db, initialize_db
-from routers import calls, index, database
+from routers import calls, index, database, statistics
 
 ### API CONFIG ###
 
 base_api:str = api_config['base']
 calls_router:str = api_config['routers']['calls']
 database_router:str = api_config['routers']['database']
+statistics_router:str = api_config['routers']['statistics']
 
 
 ### FastAPI APP ###
@@ -54,5 +55,12 @@ app.include_router(
     calls.router,
     prefix=base_api + calls_router['prefix'],
     tags=calls_router['tags']
+)
+
+# Statistics 
+app.include_router(
+    statistics.router,
+    prefix=base_api + statistics_router['prefix'],
+    tags=statistics_router['tags']
 )
 
