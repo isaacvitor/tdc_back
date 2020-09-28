@@ -1,5 +1,5 @@
 {
-    "title":"TDC - Talkdesk Challenge",
+    "title":"TDC - Talkdesk Challenge by Isaac Vitor",
     "description":"This API try to solve the Talkdesk' Challenge",
     "version":"0.0.1",
     "base": "/api",

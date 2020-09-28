@@ -40,9 +40,32 @@ In this way to achieve the goals, the solution proposed by me assume some aspect
 
 * **callee**: I assumed that the callee is a person that **receives** a call, then in an **inbound call** callee is a **call center' agent** but in an **outbound call**  the callee is a **company' client**
 
-*Really, to me, these two terms are a lite bit complicated to me understand because I don't have all knowledge of the context.*
+*Really, to me, these two terms are a lite bit complicated to understand because I don't have all knowledge of the context.*
 
-## What was used to solve the challenge
+* **statistics**: To create an experience close to the "real world app" where you could to configure all system' parameters in a management control area, for instance, to simplify this idea I created a configuration file called **business_rules.json** into **config folder**  inside of project folder.
+This configuration file has this structure:
+    ```Json
+    {
+        "agents":{"max":10},
+        "clients":{"max":100},
+        "rates":{
+            "inbound":{"fixed_rate":{"minutes":0, "price":0}, "variable_rate":{"minutes":0, "price":0} },
+            "outbound":{"fixed_rate":{"minutes":5, "price":0.10}, "variable_rate":{"minutes":1, "price":0.05} }
+        }
+    }
+    ```
+    To improve the ***"statistics' test experience"***, I decided create an endpoint("/api/database/create_fake_calls") to generate a lot of "fake calls". The parameter **agents** represent the quantity of **agents' phone numbers** that will be created to be used in the **fake calls**.
+    In the same way, the parameter **clients** represent the quantity of **clients' phone numbers**.
+    Actually, these two parameters could be overridden by two **environment variables**: **TDC_MAX_AGENTS** and **TDC_MAX_CLIENTS**.<br>
+    The **rates object** contains the base to calculate the cost of inbound and outbound calls.
+
+    The **fixed_rate** represents a fixed cost applied a call, for example, in the **outbound calls** the first 5 minutes have a cost of 0.10. In this case the parameter **minutes** represents the time of this rule to be applied. In the same way, **price** represents the cost of this tax/rate.<br><br>
+
+    The **variable_rate** have the same idea of **fixed_rate** but is applied accord to the rules of the challenged. **minutes** represents the unit base to calculate extra time and **price** represents the unitary value.<br><br>
+
+    According to the challenge' rules, only **outbound calls** have a cost. Because of that by default only **outbound calls** values were set. 
+
+## What was used to solve the challenge?
 
 Was I said above I used [FastAPI](https://fastapi.tiangolo.com/) to be the solution basement. **FastAPI** is an amazing framework to create high-performance applications.
 
@@ -57,7 +80,7 @@ To manager data structures in the API side, I used the ORM called [peewee](http:
 Basically to create the source code architecture I divided the project into three main packages: **Models**, **Controllers** and **Routers**
 ## How to run
 
-#### Using Docker
+#### Using Docker way
 
 If you have Docker in your machine you just follow the steps below:
 
@@ -79,3 +102,29 @@ $ docker run -d --name tdc_back -p 8000:80 isaacvitor/tdc_back:latest
 4. **Open your browser** and access the project by addresses:
     * http://127.0.0.1:8000 to see the simple home page implementation
     * http://127.0.0.1:8000/docs to see and test all endpoints of API
+
+#### Using boring' way
+
+To run the app in your machine you need to have python3 installed or a *virtual solution environment* such as anaconda or virtualenv.
+
+1. **Clone this repo** where do you prefer
+2. **Inside of the repo, run the command below**:
+```
+$ pip install --no-cache-dir -r requirements.txt
+``` 
+*Again, be patient maybe take some time*
+
+3. If everything **happens successfully**, you could run the command below:
+
+```
+$ uvicorn main:app
+``` 
+
+4. **Open your browser** and access the project by addresses:
+    * http://127.0.0.1:8000 to see the simple home page implementation
+    * http://127.0.0.1:8000/docs to see and test all endpoints of API
+
+## What you will see...
+
+The image below shows how "client" looks like:
+![OpenAPI Documentation](./.github/images/tdc_doc_view.png "OpenAPI Documentation")

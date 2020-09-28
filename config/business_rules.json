@@ -2,7 +2,7 @@
     "agents":{"max":10},
     "clients":{"max":100},
     "rates":{
-        "inbound":{"variable_rate":{"minutes":0, "price":0},  "fixed_rate":{"minutes":0, "price":0} },
-        "outbound":{"variable_rate":{"minutes":1, "price":0.05}, "fixed_rate":{"minutes":5, "price":0.10} }
+        "inbound":{"fixed_rate":{"minutes":0, "price":0}, "variable_rate":{"minutes":0, "price":0} },
+        "outbound":{"fixed_rate":{"minutes":5, "price":0.10}, "variable_rate":{"minutes":1, "price":0.05} }
     }
 }
