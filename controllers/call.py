@@ -39,8 +39,12 @@ class CallController():
         return r
     
     @staticmethod
-    def list():
-        query = Call.select()
+    def list(page_number:int = 1, itens_per_page:int = 10, call_type:str = None):
+        query =( Call
+                .select()
+                .where(((call_type == None) | ( Call.call_type == call_type)))
+                .paginate(page_number, itens_per_page)
+                )
         calls:list =  []
         if len(query):
             calls = [to_dict(item) for item in query]

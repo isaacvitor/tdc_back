@@ -1,6 +1,6 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Query
 from datetime import datetime, date, timedelta
-from typing import Optional, Set, List
+from typing import Optional, List
 from pydantic import BaseModel
 from utils.call_utils import CallType
 from controllers.call import CallController
@@ -65,8 +65,8 @@ async def create(calls:List[CallSchema]):
     "/",
     summary='List all CALLS'
 )
-async def list():
-    return CallController.list()
+async def list(page_number:int = 1, itens_per_page:int = 10, call_type:CallType = None):
+    return CallController.list(page_number, itens_per_page, call_type)
 
 # Get
 @router.get(
