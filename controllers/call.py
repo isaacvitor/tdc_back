@@ -19,7 +19,7 @@ class CallController():
                 # creating/recording a call
                 new_call = Call.create(**call)
         
-        return new_call
+        return to_dict(new_call)
 
     @staticmethod
     def create_many(calls):
@@ -52,7 +52,7 @@ class CallController():
 
     @staticmethod
     def get(call_id:int):
-        return Call.get_or_none(id = call_id)
+        return to_dict(Call.get_or_none(id = call_id))
 
     @staticmethod
     def remove(call_id:int):

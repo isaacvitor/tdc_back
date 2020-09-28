@@ -12,7 +12,7 @@ class CallSchema(BaseModel):
     callee:int
     started:datetime = datetime.now()
     finished:datetime
-    duration:int
+    duration:int = 0
     call_type:CallType
     day:date = date.today()
 
@@ -34,8 +34,7 @@ async def create(call:CallSchema):
     - **finished**: when the call finished
     - **duration**: will be calculated by the system, basically is a delta (duration = finished - started) => MINUTES
     - **call_type**: witch kind of call we are creating - To simplify, I'm using Enum, then the possible values are "INBOUND" and "OUTBOUND"
-    
-    **To keep simple to create one or more calls(bulk insert), the create method needs to receive a LIST of calls objects**
+
     """
     return CallController.create(call)
 
@@ -56,7 +55,7 @@ async def create(calls:List[CallSchema]):
     - **duration**: will be calculated by the system, basically is a delta (duration = finished - started) => MINUTES
     - **call_type**: witch kind of call we are creating - To simplify, I'm using Enum, then the possible values are "INBOUND" and "OUTBOUND"
     
-    **To keep simple to create one or more calls(bulk insert), the create method needs to receive a LIST of calls objects**
+    **This endpoint needs to receive a LIST of calls objects**
     """
     return CallController.create_many(calls)
 
